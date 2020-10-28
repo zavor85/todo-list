@@ -1,0 +1,142 @@
+.todo-main {
+    margin: 10px auto;
+    min-width: 250px;
+    max-width: 50%;
+}
+
+.ul, li {
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    list-style-type: none;
+    background: #eee;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.ul, li:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+.ul, li:hover {
+    background: #ddd;
+}
+
+.ul, li.checked {
+    background: rgb(29, 128, 128);
+    color: white;
+    text-decoration: line-through;
+}
+
+.ul, li.checked::before {
+    position: absolute; 
+    border-color: #fff; 
+    border-style: solid;
+    border-width: 0 2px 2px 0; 
+    top: 10px;
+    left: 16px;
+    height: 15px;
+    width: 7px;
+}
+
+.todo > input,
+.checked > input {
+    margin-right: 40px;
+    width: 20px;
+    height: 20px;
+}
+
+.todo > button,
+.checked > button {
+    position: absolute;
+    right: 0;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: rgb(240, 63, 99);
+    color: white;
+}
+.todo > button:hover,
+.checked > button:hover {
+    position: absolute;
+    right: 0;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: rgb(235, 149, 168);
+    color: black;
+}
+
+.todo-container{
+    margin: 10px auto;
+    min-width: 250px;
+    max-width: 100%;
+    margin-top: -1px;
+    margin-left: -40px;
+}
+
+.todo-header {
+    background-color: blueviolet;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+}
+
+.todo-header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.todo-header > h1{
+    font-size: 45px;
+}
+
+.todo-input > input {
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 12px;
+    float: left;
+    font-size: 16px;
+    outline: none;
+}
+
+.todo-input > button {
+    padding: 10px;
+    width: 20%;
+    min-width: 100px;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: blueviolet;
+    outline: none;
+}
+
+.todo-input > button:hover {
+    background-color: #bbb;
+}
+
+.delete-all-btn{
+    text-align: center;
+}
+
+.delete-all-btn > button{
+    height: 40px;
+    width: 130px;
+    border-radius: 20px;
+    border: none;
+    background-color: blueviolet;
+    color: white;
+    font-size: 18px;
+    margin-top: 20px;
+    outline: none;
+}
+
+.delete-all-btn > button:hover{
+      background-color: rgb(194, 109, 109);
+      border: none;
+      
+}
