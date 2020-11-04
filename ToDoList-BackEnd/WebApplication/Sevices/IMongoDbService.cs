@@ -14,5 +14,6 @@ namespace WebApplication
         Task<List<IToDo>> GetAllToDos();
         Task<IToDo> GetToDoById(int id);
         Task UpdateToDo(int id, ToDo todo);
+        Task<ToDo> FindTodo(ToDo todo);
     }
 }

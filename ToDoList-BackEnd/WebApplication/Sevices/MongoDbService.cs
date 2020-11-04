@@ -48,7 +48,7 @@ namespace WebApplication
         public async Task<IToDo> GetToDoById(int id)
         {
             var toDo = await _toDoCollection.FindAsync(todo => todo.Id == id);
-            return toDo.First();
+            return toDo.ToList().Last();
         }
 
         public async Task UpdateToDo(int id, ToDo todo)
@@ -56,6 +56,12 @@ namespace WebApplication
             var filter = Builders<ToDo>.Filter.Eq(t=>t.Id, id);
             var update = Builders<ToDo>.Update.Set(t => t.IsCompleted, todo.IsCompleted);
             await _toDoCollection.FindOneAndUpdateAsync(filter, update);
+        }
+
+        public async Task<ToDo> FindTodo(ToDo todo)
+        {
+            var result = await _toDoCollection.FindAsync(t => t.Id == todo.Id);
+            return result.ToList().Last();
         }
     }
 }
