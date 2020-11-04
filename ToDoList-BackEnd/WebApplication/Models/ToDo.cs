@@ -1,9 +1,9 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace WebApplication.Models
+namespace WebApplication
 {
-    public class ToDo
+    public class ToDo : IToDo
     {
         [BsonId]
         public int Id { get; set; }

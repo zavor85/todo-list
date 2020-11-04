@@ -1,28 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication.Models;
-using WebApplication.Sevices;
 
 
-namespace WebApplication.Controllers
+namespace WebApplication
 {
     
     [Route("todo-api/")]
     [ApiController]
     public class ToDosController : ControllerBase
     {
-        private readonly MongoDbService _mongoDbService = new MongoDbService("todo", "todo-list"); // (DBName, DBCollection)
+        private readonly IMongoDbService _mongoDbService = new MongoDbService("todo", "todo-list"); // (DBName, DBCollection)
 
         [HttpGet]
-        public async Task<List<ToDo>> Get()
+        public async Task<List<IToDo>> Get()
         {
             var allTodos = await _mongoDbService.GetAllToDos();
             return allTodos;
         }
 
         [HttpGet("{id}")]
-        public async Task<ToDo> Get(int id)
+        public async Task<IToDo> Get(int id)
         {
             var toDo = await _mongoDbService.GetToDoById(id);
             return toDo;
@@ -47,10 +45,10 @@ namespace WebApplication.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ToDo> Update(int id, ToDo todo)
+        public async Task Update(int id, ToDo todo)
         {
-            var newToDo = await _mongoDbService.UpdateToDo(id, todo);
-            return newToDo;
+            await _mongoDbService.UpdateToDo(id, todo);
+            
         }
     }
 }

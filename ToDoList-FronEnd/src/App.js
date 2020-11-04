@@ -78,7 +78,6 @@ const App = () => {
 
   const updateToDo = (id) => {
     const findToDo = toDos.filter(todo => todo.id === id)[0]
-
     let toDoForChange = {}
     if (findToDo.isCompleted === false) {
       toDoForChange = {
