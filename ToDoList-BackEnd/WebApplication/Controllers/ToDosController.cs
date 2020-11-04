@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace WebApplication
 {
     
@@ -13,10 +12,10 @@ namespace WebApplication
         private readonly IMongoDbService _mongoDbService = new MongoDbService("todo", "todo-list"); // (DBName, DBCollection)
 
         [HttpGet]
-        public async Task<List<IToDo>> Get()
+        public async Task<List<ToDo>> Get()
         {
-            var allTodos = await _mongoDbService.GetAllToDos();
-            return allTodos;
+            var allToDos =  await _mongoDbService.GetAllToDos();
+            return allToDos;
         }
 
         [HttpGet("{id}")]

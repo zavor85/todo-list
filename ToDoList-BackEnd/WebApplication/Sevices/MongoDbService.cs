@@ -12,15 +12,14 @@ namespace WebApplication
 
         public MongoDbService(string dbName, string collectionName)
         {
-            var mongoClient = new MongoClient("mongodb+srv://todo:todo@zavor.yusuq.mongodb.net/todo?retryWrites=true&w=majority");
+            var mongoClient = new MongoClient("your connection string");
             var mongoDb = mongoClient.GetDatabase(dbName);
             _toDoCollection = mongoDb.GetCollection<ToDo>(collectionName);
         }
 
-        public async Task AddToDo(IToDo toDo)
+        public async Task AddToDo(ToDo toDo)
         {
-            var documents = await _toDoCollection.FindAsync(new BsonDocument());
-            var documentList = documents.ToList();
+            var documentList = await _toDoCollection.AsQueryable().ToListAsync();
             if (documentList.Count == 0)
             {
                 toDo.Id = 0;
@@ -30,25 +29,23 @@ namespace WebApplication
                 toDo.Id = documentList.Last().Id + 1;
             }
             
-            await _toDoCollection.InsertOneAsync((ToDo)toDo);
+            await _toDoCollection.InsertOneAsync(toDo);
         }
 
         public async Task DeleteToDo(int id) => await _toDoCollection.DeleteOneAsync(t=> t.Id == id);
 
         public async Task DeleteAll() => await _toDoCollection.DeleteManyAsync(new BsonDocument());
 
-        public async Task<List<IToDo>> GetAllToDos()
+        public async Task<List<ToDo>> GetAllToDos()
         {
-            var toDos = new List<IToDo>();
-            var documents = await _toDoCollection.FindAsync(new BsonDocument());
-            await documents.ForEachAsync(todo => toDos.Add(todo));
-            return toDos;
+            var todoList = await _toDoCollection.AsQueryable().ToListAsync();
+            return todoList;
         }
 
         public async Task<IToDo> GetToDoById(int id)
         {
-            var toDo = await _toDoCollection.FindAsync(todo => todo.Id == id);
-            return toDo.ToList().Last();
+            var toDo = await _toDoCollection.Find(todo => todo.Id == id).ToListAsync();
+            return toDo.Last();
         }
 
         public async Task UpdateToDo(int id, ToDo todo)
@@ -56,12 +53,6 @@ namespace WebApplication
             var filter = Builders<ToDo>.Filter.Eq(t=>t.Id, id);
             var update = Builders<ToDo>.Update.Set(t => t.IsCompleted, todo.IsCompleted);
             await _toDoCollection.FindOneAndUpdateAsync(filter, update);
-        }
-
-        public async Task<ToDo> FindTodo(ToDo todo)
-        {
-            var result = await _toDoCollection.FindAsync(t => t.Id == todo.Id);
-            return result.ToList().Last();
         }
     }
 }
